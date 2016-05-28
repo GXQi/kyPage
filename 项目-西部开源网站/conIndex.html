@@ -1,0 +1,803 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>西部开源-首页</title>
+<script type="text/javascript" src="js/sportFrame.js"></script>
+<script>
+window.onload = function(){
+	var oSomeImg = document.getElementById('someImg');
+	var oUl = oSomeImg.getElementsByTagName('ul')[0];
+	var aImg = oSomeImg.getElementsByTagName('img'); 
+	
+	var oBtn = document.getElementById('btn');
+	var aBtn = oBtn.getElementsByTagName('input');
+	
+	var oLeft = document.getElementById('leftBtn');
+	var oRight = document.getElementById('rightBtn');
+	
+	var oDirImg = document.getElementById('direction');
+	var aDirImg = oDirImg.getElementsByClassName('img');
+	
+	var timer1 = null;
+	var cnt = 1;
+	var m = 4;
+	
+	for(var i = 0; i < aDirImg.length; i++){
+		aDirImg[i].index = i;
+		aDirImg[i].onmouseover = function(){
+			for(var i = 0; i < aDirImg.length; i++){
+				aDirImg[i].style.backgroundImage = 'url(images/h-' + (i+1) + '-comp.png)'
+			}
+			aDirImg[this.index].style.backgroundImage = 'url(images/h-' + (this.index +1) + '-over-comp.png)';
+		};
+	}
+	
+	oLeft.onclick = function(){
+		if(-cssStyle(oUl, 'left')%cssStyle(aImg[0], 'width') == 0){
+			if(cnt == 1){
+				cnt = 4;
+			}else{
+				cnt -= 1;
+			}
+			for(var i = 0; i < aBtn.length; i++){
+				aBtn[i].className = '';
+			}
+			aBtn[cnt - 1].className = 'active';
+			if(cssStyle(oUl, 'left') > - cssStyle(aImg[0], 'width')){
+				cssStyle(oUl, 'left', -cssStyle(aImg[0], 'width') * (aImg.length-2));
+			}
+			sport(oUl, {'left':cssStyle(oUl, 'left') + cssStyle(aImg[0], 'width')});
+		}else{
+			return;	
+		}
+	};
+	
+	oRight.onclick = function(){
+		if(-cssStyle(oUl, 'left')%cssStyle(aImg[0], 'width') == 0){
+			if(cnt == 4){
+				cnt = 1;
+			}else{
+				cnt += 1;
+			}
+			for(var i = 0; i < aBtn.length; i++){
+				aBtn[i].className = '';
+			}
+			aBtn[cnt - 1].className = 'active';
+			if(cssStyle(oUl, 'left') < -cssStyle(aImg[0], 'width') * (aImg.length-2)){
+				cssStyle(oUl, 'left', - cssStyle(aImg[0], 'width'));
+			}
+			sport(oUl, {'left':cssStyle(oUl, 'left') - cssStyle(aImg[0], 'width')});
+		}else{
+			return;
+		}
+	};
+	
+	for(var i = 0; i < aBtn.length; i++){
+		aBtn[i].index = i;
+		aBtn[i].onclick = function(){
+			for(var i = 0; i < aBtn.length; i++){
+				aBtn[i].className = '';
+			}
+			aBtn[this.index].className = 'active';
+			cnt = m = this.index+1;
+			sport(oUl, {'left':-(this.index * cssStyle(aImg[0], 'width'))});
+		};
+	}
+	
+	cssStyle(oUl, 'width', cssStyle(aImg[0], 'width')*aImg.length);
+	
+	function play(){
+		timer1 = setInterval(function(){
+			oRight.onclick();
+		},3000);
+	};
+	
+	function stop(){
+		clearInterval(timer1);
+	};
+	
+	oSomeImg.onmouseover = stop;
+	oSomeImg.onmouseout = play;
+	play();
+};
+</script>
+<style>
+*{
+	margin:0px;
+	padding:0px;
+	border:0px;
+	}
+	
+body{
+	font-size:12px;
+	line-height:28px;
+	overflow-x:hidden;
+	background-color:#FEFEF4;
+	}
+	
+#top{
+	width:100%;
+	height:30px;
+	background-color:#EDEDED;
+	padding:0px 200px;
+	}
+	
+#top img{
+	float:left;
+	margin:5px;
+	}
+	
+#top span{
+	display:block;
+	font-size:12px;
+	color:#999;
+	margin-right:5px;
+	float:left;
+	}
+	
+#logo{
+	width:100%;
+	height:90px;
+	padding:0 200px;
+	}
+	
+#logo img{
+	float:left;
+	margin-top:10px;
+	}
+	
+#logo #logoInf{
+	margin:35px 20px 0 20px; 
+	width:2px;
+	height:40px;
+	background-color:#999;
+	float:left;
+	}
+	
+#logo span{
+	display:block;
+	font-size:18px;
+	color:#999;
+	line-height:90px;
+	float:left;
+	}
+	
+#logo #logoImg{
+	position:absolute;
+	right:200px;
+	width:250px;
+	height:90px;
+	}
+	
+#logo .logoImg{
+	margin:20px 40px 0 0;
+	float:left;
+	}
+	
+#main{
+	width:100%;
+	}
+	
+#nav{
+	width:1200px;
+	height:35px;
+	background-color:#23365E;
+	padding-left:160px;
+	}
+	
+#nav ul{
+	list-style:none;
+	}
+	
+#nav ul li{
+	display:block;
+	float:left;
+	line-height:35px;
+	}
+	
+#nav ul li a{
+	display:block;
+	width:95px;
+	height:35px;
+	text-align:center;
+	text-decoration:none;
+	color:#FFF;
+	font-weight:bold;
+	}
+	
+#nav ul li a:hover{
+	background-color:#948824;
+	}
+	
+#nav #search{
+	width:100px;
+	height:20px;
+	border:1px solid #690;
+	}
+	
+#nav #searBtn{
+	width:30px;
+	height:20px;
+	background:#2157C1;
+	}
+	
+#someImg{
+	position:relative;
+	width:100%;
+	height:308px;
+	background-repeat:no-repeat;
+	background-size:100%;
+	overflow:hidden;
+	z-index:1;
+	}
+	
+#someImg img{
+	opacity:.9;
+	}
+	
+#someImg img:hover{
+	opacity:1;
+	}
+	
+#someImg ul{
+	position:absolute;
+	width:1366px;
+	height:308px;
+	list-style:none;
+	left:0px;
+	top:0px;
+	}
+	
+#someImg ul li{
+	float:left;
+	}
+	
+#someImg a{
+	width:1366px;
+	height:308px;
+	}
+	
+#someImg #btn{
+	position:absolute;
+	top:280px;
+	right:60px;
+	width:100px;
+	height:20px;
+	}
+
+#someImg #btn input{
+	width:10px;
+	height:10px;
+	border-radius:50%;
+	background:#000;
+	margin-right:5px;
+	opacity:.5;
+	filter:alpha(opacity:50);
+	}
+	
+#someImg #btn .active{
+	transform:scale(1.5,1.5);
+	background-color:#F90;
+	}
+	
+#leftBtn, #rightBtn{
+	width:40px;
+	height:50px;
+	opacity:0;
+	z-index:2;
+	}
+	
+#leftBtn{
+	position: absolute;
+	background-image: url(images/left.png);
+	left: 7px;
+	top: 130px;
+	}
+	
+#rightBtn{
+	position: absolute;
+	background-image: url(images/right.png);
+	right: 7px;
+	top: 130px;
+	}
+	
+#someImg:hover #leftBtn{
+	opacity:1;
+	}
+	
+#someImg:hover #rightBtn{
+	opacity:1;
+	}
+	
+#denglu{
+	width:100%;
+	height:35px;
+	background-color:#EDEDED;
+	padding-left:200px;
+	line-height:35px;
+	color:#999;
+	}
+	
+#denglu span{
+	display:block;
+	margin-right:50px;
+	float:left;
+	}
+	
+#denglu #dengluBtn{
+	width:50px;
+	height:20px;
+	background-color:#23365E;
+	margin-right:10px;
+	color:#FFF;
+	}
+	
+#denglu .dengluTxt{
+	width:140px;
+	height:20px;
+	margin-right:20px;
+	border:1px solid #666;
+	}
+	
+#denglu a{
+	text-decoration:none;
+	color:#23365E;
+	}
+	
+#education{
+	width:500px;
+	height:130px;
+	margin:auto;
+	margin-top:50px;
+	text-align:center;
+	}
+
+#direction{
+	width:800px;
+	height:200px;
+	margin:auto;
+	}
+	
+#direction .img{
+	width:200px;
+	height:200px;
+	float:left;
+	}
+	
+#news{
+	width:950px;
+	margin:auto;
+	background-color:#000;
+	margin-top:30px;
+	}
+	
+#news #leftNews, #rightNews{
+	width:460px;
+	float:left;
+	}
+	
+#news #leftNews{
+	margin-right:30px;
+	}
+	
+#news #leftNews #leftNav{
+	width:100%;
+	height:40px;
+	}
+	
+#leftNav ul{
+	list-style:none;
+	}
+	
+#leftNav ul li{
+	display:block;
+	float:left;
+	line-height:40px;
+	}
+	
+#leftNav img{
+	width:30px;
+	height:30px;
+	margin-left:10px;
+	margin-top:5px;
+	margin-right:-10px;
+	float:left;
+	}
+	
+#leftNav ul li a{
+	display:block;
+	width:100px;
+	height:40px;
+	margin-right:10px;
+	background-color:#E4E4E2;
+	box-shadow:0 0 5px #CCC;
+	border-radius:10px 10px 0px 0px;
+	text-align:center;
+	text-decoration:none;
+	color:#FFF;
+	font-size:16px;
+	font-weight:bold;
+	}
+	
+#leftNav ul li a:hover{
+	background-color:#23365E;
+	}
+	
+#leftInfo{
+	width:100%;
+	border-radius:0 0 10px 10px;
+	background-color:#FFF;
+	box-shadow:0 0 10px #CCC;
+	padding:30px;
+	box-sizing:border-box;
+	}
+	
+#leftInfo a{
+	text-decoration:none;
+	font-size:8px;
+	color:#999;
+	}
+	
+#rightTop, #rightBottom{
+	width:100%;
+	height:251px;
+	}
+	
+#rightTopNav, #rightBottomNav{
+	width:100%;
+	height:40px;
+	}
+	
+.rightNav a{
+	display:block;
+	width:100px;
+	height:40px;
+	margin-right:10px;
+	background-color:#E4E4E2;
+	box-shadow:0 0 5px #CCC;
+	border-radius:10px 10px 0px 0px;
+	text-align:center;
+	text-decoration:none;
+	color:#999;
+	font-size:16px;
+	font-weight:bold;
+	}
+	
+#rightBottomNav img{
+	width:30px;
+	height:30px;
+	margin-left:5px;
+	margin-top:5px;
+	margin-right:-10px;
+	border-right:2px solid #FFF;
+	float:left;
+	}
+	
+#rightTopNav img{
+	width:30px;
+	height:30px;
+	margin-left:5px;
+	margin-top:5px;
+	margin-right:-10px;
+	float:left;
+	}
+	
+#rightBottom{
+	margin-top:-10px;
+	}
+	
+.rightMain{
+	width:100%;
+	height:215px;
+	border-radius:10px;
+	box-shadow:0 0 10px #CCC;
+	}
+	
+#student{
+	clear:both;
+	width:600px;
+	height:130px;
+	margin:auto;
+	margin-top:50px;
+	padding-top:50px;
+	text-align:center;
+	}
+	
+#photo{
+	width:800px;
+	height:290px;
+	margin:auto;
+	}
+	
+#photo ul{
+	list-style:none;
+	}
+	
+#photo ul li{
+	width:150px;
+	height:240px;
+	box-shadow:0 0 15px #CFD3A1;
+	border:3px solid #CFD3A1;
+	box-sizing:border-box;
+	margin:0 5px;
+	float:left;
+	}
+	
+#photo ul li img{
+	width:144px;
+	}
+	
+#bottom{
+	width:100%;
+	}
+	
+#bottomNav{
+	width:100%;;
+	height:40px;
+	background-color:#2356C3;
+	margin-bottom:3px;
+	padding-left:180px;
+	}
+	
+#bottomNav ul{
+	list-style:none;
+	}
+	
+#bottomNav ul li{
+	width:70px;
+	height:40px;
+	line-height:40px;
+	display:block;
+	text-align:center;
+	float:left;
+	font-size:12px;
+	color:#FFF;
+	font-weight:800;
+	}
+	
+#bottomNav ul li:first-child{
+	width:80px;
+	background-color:#23365E;
+	font-size:15px;
+	color:#FFF;
+	}
+	
+#bottomNav ul li:last-child{
+	position:absolute;
+	right:170px;
+	width:100px;
+	}
+	
+#bottomNav ul li:last-child a{
+	text-decoration:none;
+	color:#FFF;
+	}
+	
+#address{
+	width:100%;
+	height:250px;
+	box-sizing:border-box;
+	background-color:#23365E;
+	}
+/*	
+	
+#hr{
+	width:200px;
+	height:150px;
+	text-align:center;
+	border-right:2px solid #FFF;
+	}*/
+	
+#address #bottomLogo{
+	position: absolute;
+	width: 190px;
+	height: 130px;
+	text-align: center;
+	border-right: 2px solid #FFF;
+	padding:25px 0;
+	border-right:2px solid #FFF;
+	box-sizing:border-box;
+	left: 170px;
+	top: 1980px;
+	float:left;
+	}
+	
+#bottomLogo img{
+	width:160px;
+	height:80px;
+	float:left;
+	}
+	
+#bottomInfo{
+	position:absolute;
+	top:1980px;
+	left:395px;
+	width:515px;
+	height:110px;
+	padding-top:20px;
+	box-sizing:border-box;
+	border-right:2px solid #FFF;
+	}
+	
+#erweima{
+	position:absolute;
+	top:1980px;
+	left:945px;
+	width:160px;
+	height:130px;
+	padding-top:6px;
+	box-sizing:border-box;
+	}
+	
+#erweima img{
+	width:120px;
+	height:120px;
+	}
+	
+.font01{
+	display:block;
+	margin-top:20px;
+	font-size:22px;
+	color:#535353;
+	line-height:30px;
+	font-weight:bold;
+	}
+
+.font02{
+	font-size:12px;
+	color:#999;
+	}
+</style>
+</head>
+
+<body>
+<div id="top">
+	<img src="images/phone.png" />
+    <span>客服热线：4000-000-000&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;关注我们</span>
+    <img src="images/weixin.png" />
+    <img src="images/weibo.png" />
+    <span style="position:absolute; right:200px;">您好！欢迎来到西部开源技术中心&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;帮助中心</span>
+</div>
+<div id="logo">
+	<img src="images/logo.png" width="130" height="65">
+    <div id="logoInf"></div>
+    <span>享受开源&nbsp;&nbsp;体验生活</span>
+    <div id="logoImg">
+    	<div class="logoImg">
+    		<img src="images/logo-1.png" />
+        </div>
+    	<div class="logoImg">
+            <img src="images/logo-2.png" />
+        </div>
+    	<div class="logoImg">
+            <img src="images/logo-3.png" />
+        </div>
+    </div>
+</div>
+<div id="main">
+	<div id="nav">
+    	<ul>
+        	<li><a href="#">首页</a></li>
+            <li><a href="#">关于开源</a></li>
+            <li><a href="#">教育培训</a></li>
+            <li><a href="#">学习视屏</a></li>
+            <li><a href="#">就业招聘</a></li>
+            <li><a href="#">考务系统</a></li>
+            <li><a href="#">企业技术支持</a></li>
+            <li><a href="#">联系我们</a></li>
+            <li>
+            	<input type="text" id="search">
+            	<input type="button" id="searBtn" value="go">
+            </li>
+        </ul>
+    </div>
+    <div id="someImg">
+    	<ul>
+        	<li><a href="#"><img src="images/3.jpg"></a></li>
+            <li><a href="#"><img src="images/0.jpg"></a></li>
+            <li><a href="#"><img src="images/1.jpg"></a></li>
+            <li><a href="#"><img src="images/2.jpg"></a></li>
+            <li><a href="#"><img src="images/3.jpg"></a></li>
+            <li><a href="#"><img src="images/0.jpg"></a></li>
+        </ul>
+        <div id="btn">
+        	<input class="active" type="button" />
+            <input type="button" />
+            <input type="button" />
+            <input type="button" />
+        </div>
+        <div id="leftBtn"></div>
+        <div id="rightBtn"></div>
+  </div>
+  <div id="denglu"><span>最新公告：【西部开源技术中心参加2015年西部教育论坛】</span>
+  	账号：<input class="dengluTxt" type="text" />
+    密码：<input class="dengluTxt" type="text" />
+    <input type="button" id="dengluBtn" value="登 录"/>
+    <a href="#">快速注册</a>
+  </div>
+  <div id="education"><span style="font-size:36px; color:#23365E;">service Firm 服务企业</span><br /><span style="font-size:16px; color:#666;">西部开源技术中心独创五大就业方向课程</span><br /><span style="font-size:10px; color:#999;">LINUX系统运维工程师/JAVA EE工程师/C开发工程师/Android工程师/Web前端工程师</span></div>
+  <div id="direction">
+	<a href="#"><div class="img" style="background-image:url(images/h-1-comp.png); background-size:100%;"></div></a>
+    <a href="#"><div class="img" style="background-image:url(images/h-2-comp.png); background-size:100%;"></div></a>
+    <a href="#"><div class="img" style="background-image:url(images/h-3-comp.png); background-size:100%;"></div></a>
+    <a href="#"><div class="img" style="background-image:url(images/h-4-comp.png); background-size:100%;"></div></a>
+  </div>
+  <div id="news">
+  	<div id="leftNews">
+    	<div id="leftNav">
+        	<ul>
+            	<li><a href="#"><img src="images/news.png" />新闻</a></li>
+                <li><a href="#"><img src="images/notice.png" />公告</a></li>
+                <li><a href="#"><img src="images/job.png" />招聘</a></li>
+            </ul>
+        </div>
+       	<div id="leftInfo">
+        	<a href="#"><img src="images/pic.png" style="width:250px; height:160px; border:5px solid #E9E9E7; border-radius:5px;" /><span style="margin-left:50px;">更多新闻<img src="images/more.png" /></span></a>
+            <span class="font01">2015年11月11日</span>
+            <p class="font02">西部开源技术中心毕业学员刘某某在网易双十一活动中，担任营销总管并成功组织了当天的活动。收到各界人士的认可。</p>
+            <span class="font01">2015年11月13日</span>
+            <p class="font02">西部开源技术中心毕业学员刘某某在网易双十一活动中，担任营销总管并成功组织了当天的活动。</p>
+        </div>
+    </div>
+    <div id="rightNews">
+    	<div id="rightTop">
+        	<div class="rightNav">
+            	<a href="#"><img src="images/info.png" />就业信息</a>
+            </div>
+           	<div class="rightMain">
+            jhkjacd
+            </div>
+        </div>
+        <div id="rightBottom">
+        	<div class="rightNav">
+            	<a href="#"><img src="images/info.png" />就业信息</a>
+            </div>
+           	<div class="rightMain">
+            sdfmbkj
+            </div>
+        </div>
+    </div>
+  </div>
+  <div id="student"><span style="font-size:36px; color:#23365E;">Students 优秀学员</span><br /><span style="font-size:16px; color:#666;">西部开源技术中心独创五大就业方向课程</span><br /><span style="font-size:10px; color:#999;">LINUX系统运维工程师/JAVA EE工程师/C开发工程师/Android工程师/Web前端工程师</span></div>
+  <div id="photo">
+  	<ul>
+    	<li><img src="images/main_wrapper-1.png" /><span style="display:block; clear:both; font-size:12px; color:#999; line-height:20px;">学员姓名：刘梦<br>就业企业：阿里巴巴中国</span></li>
+        <li><img src="images/main_wrapper-2.png" /><span style="display:block; clear:both; font-size:12px; color:#999; line-height:20px;">学员姓名：刘梦<br>就业企业：阿里巴巴中国</span></li>
+        <li><img src="images/main_wrapper-3.png" /><span style="display:block; clear:both; font-size:12px; color:#999; line-height:20px;">学员姓名：刘梦<br>就业企业：阿里巴巴中国</span></li>
+        <li><img src="images/main_wrapper-4.png" /><span style="display:block; clear:both; font-size:12px; color:#999; line-height:20px;">学员姓名：刘梦<br>就业企业：阿里巴巴中国</span></li>
+        <li><img src="images/main_wrapper-5.png" /><span style="display:block; clear:both; font-size:12px; color:#999; line-height:20px;">学员姓名：刘梦<br>就业企业：阿里巴巴中国</span></li>
+    </ul>
+  </div>
+</div>
+<div id="bottom">
+	<div id="bottomNav">
+    	<ul>
+        	<li>合作企业</li>
+            <li>百度中国</li>
+            <li>搜狐中国</li>
+            <li>小米国际</li>
+            <li>阿里巴巴</li>
+            <li>华为国际</li>
+            <li>天猫国际</li>
+            <li>京东商城</li>
+            <li><a href="#">更多合作企业></a></li>
+        </ul>
+   	</div>
+    <div id="address">
+    	<div id="bottomLogo">
+        	<img src="images/logo.png" />
+        </div>
+        <div id="bottomInfo">
+        	<span style="color:#FFF; font-size:10px;">关于开源&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;教育培训&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;学习视屏&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;企业技术支持<br>
+				  地址：西安太白南路181号西部电子社区A座C区506室&nbsp;&nbsp;联系电话：029-86699937&nbsp;&nbsp;邮箱：westos@vip.com<br>
+				  copyright 2015西部来源技术中心</span>
+        </div>
+        <div id="erweima">
+        	<span style="display:block; float:left; margin-right:10px; line-height:20px; font-size:16px; color:#FFF; font-weight:bold; margin-top:10px;">扫<br>码<br>有<br>惊<br>喜</span>
+        	<img src="images/code.png" />
+        </div>
+  </div>
+</div>
+</body>
+</html>

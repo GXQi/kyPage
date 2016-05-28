@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>欢迎来到西部开源</title>
+<script>
+window.onload = function(){
+	var oLeft = document.getElementById('leftImg');
+	var oRight = document.getElementById('rightImg');
+	
+	oLeft.onmouseover = function(){
+		oLeft.style.backgroundImage = 'url(images/1-over.png)';
+	};
+	oLeft.onmouseout = function(){
+		oLeft.style.backgroundImage = 'url(images/1.png)';
+	};
+	
+	oRight.onmouseover = function(){
+		oRight.style.backgroundImage = 'url(images/2-over.png)';
+	};
+	oRight.onmouseout = function(){
+		oRight.style.backgroundImage = 'url(images/2.png)';
+	};
+};
+</script>
+<style>
+*{
+	margin:0xp;
+	padding:0px;
+	border:0px;
+	}
+
+#box{
+	width:1100px;
+	height:470px;
+	margin:100px auto;
+	}
+	
+#logo{
+	position:absolute;
+	left:620px;
+	top:25px;
+	width:50px;
+	height:50px;
+	background-image:url(images/logo-5.png);
+	background-size:100%;
+	}
+	
+#leftImg{
+	width:550px;
+	height:470px;
+	background-image:url(images/1.png);
+	background-size:100%;
+	float:left;
+	}
+	
+#rightImg{
+	width:550px;
+	height:470px;
+	background-image:url(images/2.png);
+	background-size:100%;
+	float:left;
+	}
+	
+#left{
+	position: absolute;
+	left: 60px;
+	top: 280px;
+	width: 15px;
+	height: 150px;
+	font-size:10px;
+	color:#999;
+	line-height:12px;
+	}
+	
+#right{
+	position: absolute;
+	right: 60px;
+	top: 280px;
+	width: 15px;
+	height: 150px;
+	font-size:10px;
+	color:#999;
+	line-height:12px;
+	}
+	
+#info{
+	width:120px;
+	height:15px;
+	margin:-90px auto;
+	font-size:14px;
+	color:#999;
+	}
+</style>
+</head>
+
+<body>
+<div id="left">—高薪就业无忧—</div>
+<div id="right">—企业技术支持—</div>
+<div id="logo"></div>
+<div id="box">
+	<a href="#"><div id="leftImg"></div></a>
+    <a href="#"><div id="rightImg"></div></a>
+</div>
+<div id="info">西部开源技术中心</div>
+</body>
+</html>
